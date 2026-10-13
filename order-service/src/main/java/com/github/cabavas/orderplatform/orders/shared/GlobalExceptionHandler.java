@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(OrderNotFoundException.class)
     public ProblemDetail handleOrderNotFound(OrderNotFoundException ex, HttpServletRequest req) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-        pd.setTitle("Pedido não encontrado");
+        pd.setTitle("Order not found");
         pd.setInstance(URI.create(req.getRequestURI()));
         return pd;
     }
@@ -27,21 +27,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidOrderStateException.class)
     public ProblemDetail handleInvalidState(InvalidOrderStateException ex, HttpServletRequest req) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
-        pd.setTitle("Transição de estado inválida");
+        pd.setTitle("Invalid state transition");
         pd.setInstance(URI.create(req.getRequestURI()));
         return pd;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidation(MethodArgumentNotValidException ex, HttpServletRequest req) {
-        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Um ou mais campos estão inválidos");
-        pd.setTitle("Requisição inválida");
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "One or more fields are invalid");
+        pd.setTitle("Invalid request");
         pd.setInstance(URI.create(req.getRequestURI()));
 
         Map<String, String> fieldErrors = ex.getBindingResult().getFieldErrors().stream()
                 .collect(Collectors.toMap(
                         fe -> fe.getField(),
-                        fe -> fe.getDefaultMessage() != null ? fe.getDefaultMessage() : "inválido",
+                        fe -> fe.getDefaultMessage() != null ? fe.getDefaultMessage() : "invalid",
                         (a, b) -> a + "; " + b
                 ));
         pd.setProperty("errors", fieldErrors);

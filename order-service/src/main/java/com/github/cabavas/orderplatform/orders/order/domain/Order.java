@@ -52,7 +52,7 @@ public class Order {
     private List<OrderItem> items = new ArrayList<>();
 
     public static Order create(UUID customerId, String currency) {
-        if(customerId == null) throw new IllegalArgumentException("CustomerId can't be null");
+        if(customerId == null) throw new IllegalArgumentException("customerId is required");
         Order order = new Order();
         order.customerId = customerId;
         order.status = OrderStatus.PENDING;
@@ -63,7 +63,7 @@ public class Order {
 
     public void addItem(UUID productId, String productName, int quantity, BigDecimal unitPrice) {
         if(status != OrderStatus.PENDING) {
-            throw new InvalidOrderStateException("Can't change items of an order in " + status);
+            throw new InvalidOrderStateException("Cannot change items of an order in status " + status);
         }
         OrderItem item = OrderItem.create(this, productId, productName, quantity, unitPrice);
         items.add(item);
@@ -98,7 +98,7 @@ public class Order {
 
     private void transitionTo(OrderStatus next) {
         if (!isValidTransition(this.status, next)) {
-            throw new InvalidOrderStateException("Transição inválida: " + status + " -> " + next);
+            throw new InvalidOrderStateException("Invalid transition: " + status + " -> " + next);
         }
         this.status = next;
     }

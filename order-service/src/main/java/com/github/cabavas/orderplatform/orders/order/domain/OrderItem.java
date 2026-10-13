@@ -38,8 +38,8 @@ public class OrderItem {
     private BigDecimal subtotal;
 
     static OrderItem create(Order order, UUID productId, String productName, int quantity, BigDecimal unitPrice) {
-        if(quantity <= 0) throw new IllegalArgumentException("Quantity must be > 0");
-        if(unitPrice == null || unitPrice.signum() < 0) throw new IllegalArgumentException("Invalid unit price");
+        if(quantity <= 0) throw new IllegalArgumentException("quantity must be > 0");
+        if(unitPrice == null || unitPrice.signum() < 0) throw new IllegalArgumentException("unitPrice is invalid");
 
         OrderItem item = new OrderItem();
         item.order = order;
