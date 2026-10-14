@@ -1,4 +1,4 @@
-package main.java.com.github.cabavas.orderplatform.contracts.order;
+package com.github.cabavas.orderplatform.contracts.order;
 
 import java.math.BigDecimal;
 import java.time.Instant;

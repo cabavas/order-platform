@@ -3,7 +3,7 @@ spring:
     name: order-service
   docker:
     compose:
-      file: docker-compose.yml
+      enabled: false
   datasource:
     url: jdbc:postgresql://localhost:5432/orders
     username: orders
